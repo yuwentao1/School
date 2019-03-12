@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shoocl.ywt.login.mapper.UserMapper">
+	<resultMap type="com.shoocl.ywt.login.entity.User" id="Usermapper">
+		<id column="id" property="id"/>
+		<result column="uname" property="uname"/>
+		<result column="password" property="password"/>
+		<result column="sex" property="sex"/>
+		<result column="ientitycard" property="ientitycard"/>
+		<result column="datebirth" property="datebirth"/>
+		<association property="jur" javaType="com.shoocl.ywt.login.entity.P_jurtion">
+			<id column="pid" property="pid"/>
+			<result column="pname" property="pname"/>
+		</association>
+	</resultMap>
+
+	<select id="query" resultMap="Usermapper">
+		SELECT * FROM `user` AS u,`p_jurtion` AS j WHERE u.`p_jurid` = j.pid AND
+		u.`uname`=#{username}
+	</select>
+	
+	<select id="jurisdiction" resultType="String">
+		    SELECT a.athname FROM p_jaTable AS j,`p_authority` AS a WHERE j.`pj_id`=#{pj_id}  AND j.`pa_id`=a.`aid`
+	</select>
+	
+</mapper>
